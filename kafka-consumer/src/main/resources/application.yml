@@ -1,0 +1,8 @@
+server:
+  port: 8081
+
+kafka:
+  consumer:
+    bootstrap: localhost:9092,localhost:9093,localhost:9094
+    group: igor-group
+    topic: topic-example
