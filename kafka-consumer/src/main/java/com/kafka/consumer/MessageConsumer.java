@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class MessageConsumer {
     private static final Logger logger = LoggerFactory.getLogger(MessageConsumer.class);
 
-    @KafkaListener(topics = "${kafka.consumer.topic}")
+    @KafkaListener(topics = "${kafka.consumer.topic}", group = "${kafka.consumer.group}")
     public void onReceiving(Message message, @Header(KafkaHeaders.OFFSET) Integer offset,
                             @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition,
                             @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {

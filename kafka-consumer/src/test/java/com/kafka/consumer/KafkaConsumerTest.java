@@ -13,6 +13,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.rule.KafkaEmbedded;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.UUID;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class KafkaConsumerTest {
@@ -20,20 +22,24 @@ public class KafkaConsumerTest {
 
 	@Autowired
 	private KafkaTemplate<String, Message> kafkaTemplate;
-	/*@ClassRule
-	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(3, true, 2, "topic-example");*/
+	@ClassRule
+	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(3, true, 2, "topic-example");
 
 
 	@Test
 	public void contextLoads() {
+		Message message = new Message();
+		message.setContent("Some content");
+		message.setId(UUID.randomUUID().toString());
+		kafkaTemplate.send("topic-example", message.getId(), message);
 		logger.info("hi");
 	}
 
-	@TestConfiguration
+	/*@TestConfiguration
 	private static class KafkaEmbeddedConf{
 		public KafkaEmbedded getKafkaEmbedded(@Value("${kafka.consumer.topic}") String topic){
 			return new KafkaEmbedded(3, true, 3, topic);
 		}
-	}
+	}*/
 
 }
